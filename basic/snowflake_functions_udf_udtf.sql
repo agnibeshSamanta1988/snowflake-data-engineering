@@ -1,0 +1,653 @@
+-- =====================================================
+-- SNOWFLAKE FUNCTIONS REFERENCE WITH EXAMPLES
+-- =====================================================
+
+---> see all functions
+SHOW FUNCTIONS;
+--Function (Built-in Functions)
+
+-- =====================================================
+-- STRING FUNCTIONS
+-- =====================================================
+
+SELECT CONCAT('Hello', ' ', 'World');
+SELECT CONCAT_WS('-', '2025', '12', '30');
+SELECT LENGTH('Snowflake');
+SELECT UPPER('snowflake');
+SELECT LOWER('SNOWFLAKE');
+SELECT INITCAP('hello world');
+SELECT SUBSTRING('Snowflake', 1, 4);
+SELECT LEFT('Snowflake', 4);
+SELECT RIGHT('Snowflake', 5);
+SELECT TRIM('  Snowflake  ');
+SELECT LTRIM('###Snowflake', '#');
+SELECT RTRIM('Snowflake###', '#');
+SELECT REPLACE('Hello World', 'World', 'Snowflake');
+SELECT REVERSE('Snowflake');
+SELECT REPEAT('Snow', 3);
+SELECT SPLIT('a,b,c,d', ',');
+SELECT CHARINDEX('flake', 'Snowflake');
+SELECT POSITION('flake' IN 'Snowflake');
+SELECT CONTAINS('Snowflake Data Cloud', 'Data');
+SELECT STARTSWITH('Snowflake', 'Snow');
+SELECT ENDSWITH('Snowflake', 'flake');
+SELECT LPAD('123', 6, '0');
+SELECT RPAD('123', 6, '0');
+SELECT REGEXP_REPLACE('abc123def456', '[0-9]+', 'X');
+SELECT REGEXP_SUBSTR('Email: user@example.com', '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}');
+SELECT REGEXP_COUNT('abc123def456ghi789', '[0-9]+');
+SELECT REGEXP_INSTR('abc123def', '[0-9]+');
+SELECT REGEXP_LIKE('test123', '.*[0-9]+.*');
+SELECT TRANSLATE('hello', 'helo', 'HELO');
+SELECT ASCII('A');
+SELECT CHR(65);
+
+-- =====================================================
+-- NUMERIC FUNCTIONS
+-- =====================================================
+
+SELECT ABS(-42);
+SELECT ABS(-14);
+SELECT SIGN(-42);
+SELECT SIGN(0);
+SELECT SIGN(42);
+SELECT ROUND(123.456, 2);
+SELECT ROUND(123.456);
+SELECT CEIL(123.45);
+SELECT CEILING(123.45);
+SELECT FLOOR(123.99);
+SELECT TRUNC(123.456, 1);
+SELECT TRUNCATE(123.456, 1);
+SELECT POWER(2, 10);
+SELECT POW(2, 10);
+SELECT SQRT(144);
+SELECT CBRT(27);
+SELECT EXP(1);
+SELECT LN(2.718281828);
+SELECT LOG(10, 100);
+SELECT LOG(100, 10);
+SELECT SIN(PI()/2);
+SELECT COS(0);
+SELECT TAN(PI()/4);
+SELECT ASIN(1);
+SELECT ACOS(0);
+SELECT ATAN(1);
+SELECT ATAN2(1, 1);
+SELECT DEGREES(PI());
+SELECT RADIANS(180);
+SELECT PI();
+SELECT MOD(17, 5);
+SELECT DIV0(10, 2);
+SELECT DIV0(10, 0);
+SELECT DIV0NULL(10, 0);
+SELECT RANDOM();
+SELECT UNIFORM(1, 100, RANDOM());
+SELECT GREATEST(10, 20, 5, 15);
+SELECT LEAST(10, 20, 5, 15);
+
+-- =====================================================
+-- DATE AND TIME FUNCTIONS
+-- =====================================================
+
+SELECT CURRENT_DATE();
+SELECT CURRENT_TIME();
+SELECT CURRENT_TIMESTAMP();
+SELECT GETDATE();
+SELECT SYSDATE();
+SELECT SYSTIMESTAMP();
+SELECT LOCALTIME();
+SELECT LOCALTIMESTAMP();
+SELECT DATE_FROM_PARTS(2025, 12, 30);
+SELECT TIME_FROM_PARTS(14, 30, 45);
+SELECT TIMESTAMP_FROM_PARTS(2025, 12, 30, 14, 30, 45);
+SELECT YEAR(CURRENT_DATE());
+SELECT MONTH(CURRENT_DATE());
+SELECT DAY(CURRENT_DATE());
+SELECT DAYOFWEEK(CURRENT_DATE());
+SELECT DAYOFWEEKISO(CURRENT_DATE());
+SELECT DAYOFMONTH(CURRENT_DATE());
+SELECT DAYOFYEAR(CURRENT_DATE());
+SELECT WEEKOFYEAR(CURRENT_DATE());
+SELECT WEEK(CURRENT_DATE());
+SELECT QUARTER(CURRENT_DATE());
+SELECT HOUR(CURRENT_TIMESTAMP());
+SELECT MINUTE(CURRENT_TIMESTAMP());
+SELECT SECOND(CURRENT_TIMESTAMP());
+SELECT EXTRACT(YEAR FROM CURRENT_DATE());
+SELECT EXTRACT(MONTH FROM CURRENT_DATE());
+SELECT DATE_PART('YEAR', CURRENT_DATE());
+SELECT DATE_PART('MONTH', CURRENT_DATE());
+SELECT DATEADD(DAY, 7, CURRENT_DATE());
+SELECT DATEADD(MONTH, 3, CURRENT_DATE());
+SELECT DATEADD(YEAR, 1, CURRENT_DATE());
+SELECT DATEDIFF(DAY, '2025-01-01', CURRENT_DATE());
+SELECT DATEDIFF(MONTH, '2025-01-01', CURRENT_DATE());
+SELECT DATEDIFF(YEAR, '2020-01-01', CURRENT_DATE());
+SELECT TIMEDIFF(HOUR, '2025-12-30 10:00:00', '2025-12-30 15:00:00');
+SELECT TIMESTAMPDIFF(DAY, '2025-01-01', CURRENT_TIMESTAMP());
+SELECT DATE_TRUNC('MONTH', CURRENT_DATE());
+SELECT DATE_TRUNC('YEAR', CURRENT_DATE());
+SELECT DATE_TRUNC('WEEK', CURRENT_DATE());
+SELECT DATE_TRUNC('QUARTER', CURRENT_DATE());
+SELECT DATE_TRUNC('HOUR', CURRENT_TIMESTAMP());
+SELECT LAST_DAY(CURRENT_DATE());
+SELECT LAST_DAY(CURRENT_DATE(), 'YEAR');
+SELECT LAST_DAY(CURRENT_DATE(), 'QUARTER');
+SELECT NEXT_DAY(CURRENT_DATE(), 'MONDAY');
+SELECT PREVIOUS_DAY(CURRENT_DATE(), 'MONDAY');
+SELECT MONTHNAME(CURRENT_DATE());
+SELECT DAYNAME(CURRENT_DATE());
+SELECT ADD_MONTHS(CURRENT_DATE(), 6);
+SELECT MONTHS_BETWEEN(CURRENT_DATE(), '2025-01-01');
+
+-- =====================================================
+-- CONVERSION FUNCTIONS
+-- =====================================================
+
+SELECT CAST('123' AS INTEGER);
+SELECT CAST(123.456 AS INTEGER);
+SELECT CAST(CURRENT_DATE() AS VARCHAR);
+SELECT TO_NUMBER('123.45');
+SELECT TO_NUMERIC('123.45');
+SELECT TO_DECIMAL('123.45', 10, 2);
+SELECT TO_DOUBLE('123.45');
+SELECT TO_DATE('2025-12-30');
+SELECT TO_DATE('2025-12-30', 'YYYY-MM-DD');
+SELECT TO_DATE('30/12/2025', 'DD/MM/YYYY');
+SELECT TO_TIME('14:30:45');
+SELECT TO_TIME('14:30:45', 'HH24:MI:SS');
+SELECT TO_TIMESTAMP('2025-12-30 14:30:45');
+SELECT TO_TIMESTAMP('2025-12-30 14:30:45', 'YYYY-MM-DD HH24:MI:SS');
+SELECT TO_TIMESTAMP_LTZ('2025-12-30 14:30:45');
+SELECT TO_TIMESTAMP_NTZ('2025-12-30 14:30:45');
+SELECT TO_TIMESTAMP_TZ('2025-12-30 14:30:45 +0530');
+SELECT TO_VARCHAR(123.456);
+SELECT TO_VARCHAR(123.456, '999.99');
+SELECT TO_CHAR(CURRENT_DATE());
+SELECT TO_CHAR(CURRENT_DATE(), 'YYYY-MM-DD');
+SELECT TO_CHAR(CURRENT_DATE(), 'Month DD, YYYY');
+SELECT TO_CHAR(123.456, '999.99');
+SELECT TO_BINARY('48656C6C6F', 'HEX');
+SELECT TO_BOOLEAN('true');
+SELECT TO_BOOLEAN(1);
+SELECT TO_ARRAY('["a","b","c"]');
+SELECT TO_OBJECT('{"key":"value"}');
+SELECT TO_VARIANT('test');
+SELECT TRY_CAST('abc' AS INTEGER);
+SELECT TRY_TO_NUMBER('abc');
+SELECT TRY_TO_NUMERIC('abc');
+SELECT TRY_TO_DECIMAL('abc');
+SELECT TRY_TO_DATE('invalid-date');
+SELECT TRY_TO_TIME('invalid-time');
+SELECT TRY_TO_TIMESTAMP('invalid');
+SELECT TRY_TO_BINARY('invalid', 'HEX');
+SELECT TRY_TO_BOOLEAN('maybe');
+
+-- =====================================================
+-- CONDITIONAL FUNCTIONS
+-- =====================================================
+
+SELECT CASE WHEN 10 > 5 THEN 'Greater' WHEN 10 = 5 THEN 'Equal' ELSE 'Less' END;
+SELECT IFF(10 > 5, 'Yes', 'No');
+SELECT IFF(10 < 5, 'Yes', 'No');
+SELECT COALESCE(NULL, NULL, 'First Value', 'Second Value');
+SELECT COALESCE(NULL, 'Second', 'Third');
+SELECT IFNULL(NULL, 'Default');
+SELECT IFNULL('Value', 'Default');
+SELECT NVL(NULL, 'Default Value');
+SELECT NVL('Value', 'Default Value');
+SELECT NVL2(NULL, 'Not Null', 'Is Null');
+SELECT NVL2('Value', 'Not Null', 'Is Null');
+SELECT NULLIF(10, 10);
+SELECT NULLIF(10, 20);
+SELECT NULLIFZERO(0);
+SELECT NULLIFZERO(10);
+SELECT ZEROIFNULL(NULL);
+SELECT ZEROIFNULL(10);
+SELECT DECODE(2, 1, 'One', 2, 'Two', 3, 'Three', 'Other');
+SELECT DECODE('B', 'A', 'Letter A', 'B', 'Letter B', 'Unknown');
+SELECT REGR_VALX(10, 20);
+SELECT REGR_VALY(10, 20);
+SELECT EQUAL_NULL(NULL, NULL);
+SELECT EQUAL_NULL(5, NULL);
+SELECT EQUAL_NULL(5, 5);
+
+-- =====================================================
+-- AGGREGATE FUNCTIONS
+-- =====================================================
+
+SELECT COUNT(*);
+SELECT COUNT(1);
+SELECT COUNT(DISTINCT 1);
+SELECT SUM(100);
+SELECT AVG(100);
+SELECT MIN(100);
+SELECT MAX(100);
+SELECT MEDIAN(100);
+SELECT STDDEV(100);
+SELECT STDDEV_POP(100);
+SELECT STDDEV_SAMP(100);
+SELECT VARIANCE(100);
+SELECT VAR_POP(100);
+SELECT VAR_SAMP(100);
+SELECT CORR(1, 2);
+SELECT COVAR_POP(1, 2);
+SELECT COVAR_SAMP(1, 2);
+SELECT KURTOSIS(1);
+SELECT SKEW(1);
+SELECT APPROX_COUNT_DISTINCT(1);
+SELECT APPROX_PERCENTILE(100, 0.5);
+SELECT APPROX_TOP_K(1, 5);
+SELECT ANY_VALUE(1);
+SELECT LISTAGG('item', ',');
+SELECT ARRAY_AGG(1);
+SELECT OBJECT_AGG('key', 'value');
+SELECT BOOLAND(TRUE);
+SELECT BOOLOR(TRUE);
+SELECT BOOLXOR(TRUE);
+SELECT BITAND_AGG(15);
+SELECT BITOR_AGG(15);
+SELECT BITXOR_AGG(15);
+SELECT MODE(1);
+SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY 1);
+SELECT PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY 1);
+
+-- =====================================================
+-- WINDOW FUNCTIONS
+-- =====================================================
+
+SELECT ROW_NUMBER() OVER (ORDER BY 1);
+SELECT RANK() OVER (ORDER BY 1);
+SELECT DENSE_RANK() OVER (ORDER BY 1);
+SELECT PERCENT_RANK() OVER (ORDER BY 1);
+SELECT CUME_DIST() OVER (ORDER BY 1);
+SELECT NTILE(4) OVER (ORDER BY 1);
+SELECT LAG(1) OVER (ORDER BY 1);
+SELECT LAG(1, 2) OVER (ORDER BY 1);
+SELECT LAG(1, 1, 0) OVER (ORDER BY 1);
+SELECT LEAD(1) OVER (ORDER BY 1);
+SELECT LEAD(1, 2) OVER (ORDER BY 1);
+SELECT LEAD(1, 1, 0) OVER (ORDER BY 1);
+SELECT FIRST_VALUE(1) OVER (ORDER BY 1);
+SELECT LAST_VALUE(1) OVER (ORDER BY 1);
+SELECT NTH_VALUE(1, 2) OVER (ORDER BY 1);
+SELECT RATIO_TO_REPORT(100) OVER ();
+SELECT SUM(100) OVER (ORDER BY 1);
+SELECT AVG(100) OVER (ORDER BY 1);
+SELECT COUNT(*) OVER (ORDER BY 1);
+SELECT MIN(100) OVER (ORDER BY 1);
+SELECT MAX(100) OVER (ORDER BY 1);
+
+-- =====================================================
+-- SEMI-STRUCTURED DATA FUNCTIONS
+-- =====================================================
+
+SELECT PARSE_JSON('{"name":"John","age":30}');
+SELECT PARSE_JSON('["a","b","c"]');
+SELECT TRY_PARSE_JSON('invalid json');
+SELECT CHECK_JSON('{"name":"John"}');
+SELECT CHECK_JSON('invalid');
+SELECT JSON_EXTRACT_PATH_TEXT('{"name":"John"}', 'name');
+SELECT ARRAY_CONSTRUCT(1, 2, 3, 4, 5);
+SELECT ARRAY_CONSTRUCT('a', 'b', 'c');
+SELECT ARRAY_CONSTRUCT_COMPACT(1, NULL, 3);
+SELECT ARRAY_SIZE(ARRAY_CONSTRUCT(1, 2, 3, 4, 5));
+SELECT ARRAY_SLICE(ARRAY_CONSTRUCT('a','b','c','d','e'), 1, 3);
+SELECT ARRAY_APPEND(ARRAY_CONSTRUCT(1, 2, 3), 4);
+SELECT ARRAY_PREPEND(ARRAY_CONSTRUCT(2, 3, 4), 1);
+SELECT ARRAY_CAT(ARRAY_CONSTRUCT(1, 2), ARRAY_CONSTRUCT(3, 4));
+SELECT ARRAY_COMPACT(ARRAY_CONSTRUCT(1, NULL, 3, NULL, 5));
+SELECT ARRAY_CONTAINS('c'::VARIANT, ARRAY_CONSTRUCT('a','b','c','d'));
+SELECT ARRAY_POSITION('c'::VARIANT, ARRAY_CONSTRUCT('a','b','c','d'));
+SELECT ARRAY_INSERT(ARRAY_CONSTRUCT('a','b','d'), 2, 'c');
+SELECT ARRAY_INTERSECTION(ARRAY_CONSTRUCT(1,2,3,4), ARRAY_CONSTRUCT(3,4,5,6));
+SELECT ARRAY_DISTINCT(ARRAY_CONSTRUCT(1, 2, 2, 3, 3, 4));
+SELECT ARRAY_EXCEPT(ARRAY_CONSTRUCT(1,2,3), ARRAY_CONSTRUCT(2,3,4));
+SELECT ARRAY_TO_STRING(ARRAY_CONSTRUCT('a','b','c'), '-');
+SELECT ARRAYS_OVERLAP(ARRAY_CONSTRUCT(1,2,3), ARRAY_CONSTRUCT(3,4,5));
+SELECT OBJECT_CONSTRUCT('name', 'John', 'age', 30);
+SELECT OBJECT_CONSTRUCT_KEEP_NULL('name', 'John', 'city', NULL);
+SELECT OBJECT_DELETE(PARSE_JSON('{"name":"John","age":30}'), 'age');
+SELECT OBJECT_INSERT(PARSE_JSON('{"name":"John"}'), 'age', 30);
+SELECT OBJECT_INSERT(PARSE_JSON('{"name":"John"}'), 'age', 30, TRUE);
+SELECT OBJECT_PICK(PARSE_JSON('{"name":"John","age":30,"city":"NYC"}'), 'name', 'age');
+SELECT OBJECT_KEYS(PARSE_JSON('{"name":"John","age":30}'));
+SELECT GET(PARSE_JSON('{"name":"John"}'), 'name');
+SELECT GET_PATH(PARSE_JSON('{"user":{"name":"John"}}'), 'user.name');
+SELECT IS_ARRAY(PARSE_JSON('[]'));
+SELECT IS_OBJECT(PARSE_JSON('{}'));
+SELECT IS_BOOLEAN(PARSE_JSON('true'));
+SELECT IS_BINARY(TO_BINARY('test', 'UTF-8'));
+SELECT IS_CHAR(TO_VARCHAR('test'));
+SELECT IS_DATE(CURRENT_DATE());
+SELECT IS_DATE_VALUE(PARSE_JSON('"2025-12-30"'));
+SELECT IS_DECIMAL(TO_DECIMAL(123.45));
+SELECT IS_DOUBLE(TO_DOUBLE(123.45));
+SELECT IS_INTEGER(123);
+SELECT IS_NULL_VALUE(PARSE_JSON('null'));
+SELECT IS_REAL(TO_REAL(123.45));
+SELECT IS_TIME(CURRENT_TIME());
+SELECT IS_TIMESTAMP_LTZ(CURRENT_TIMESTAMP());
+SELECT IS_TIMESTAMP_NTZ(TO_TIMESTAMP_NTZ('2025-12-30'));
+SELECT IS_TIMESTAMP_TZ(TO_TIMESTAMP_TZ('2025-12-30 +0530'));
+SELECT TYPEOF(PARSE_JSON('{"name":"John"}'));
+SELECT STRIP_NULL_VALUE(PARSE_JSON('{"name":"John","age":null}'));
+
+-- =====================================================
+-- HASH FUNCTIONS
+-- =====================================================
+
+SELECT HASH('Snowflake');
+SELECT HASH('Snowflake', 'MD5');
+SELECT HASH('Snowflake', 'SHA1');
+SELECT MD5('Snowflake');
+SELECT MD5_HEX('Snowflake');
+SELECT MD5_BINARY('Snowflake');
+SELECT MD5_NUMBER('Snowflake');
+SELECT MD5_NUMBER('Snowflake', 10);
+SELECT SHA1('Snowflake');
+SELECT SHA1_HEX('Snowflake');
+SELECT SHA1_BINARY('Snowflake');
+SELECT SHA2('Snowflake');
+SELECT SHA2('Snowflake', 256);
+SELECT SHA2('Snowflake', 512);
+SELECT SHA2_HEX('Snowflake');
+SELECT SHA2_BINARY('Snowflake');
+
+-- =====================================================
+-- ENCODING/DECODING FUNCTIONS
+-- =====================================================
+
+SELECT BASE64_ENCODE('Hello Snowflake');
+SELECT BASE64_DECODE_STRING('SGVsbG8gU25vd2ZsYWtl');
+SELECT BASE64_DECODE_BINARY('SGVsbG8gU25vd2ZsYWtl');
+SELECT HEX_ENCODE('Snowflake');
+SELECT HEX_ENCODE('Snowflake', 0);
+SELECT HEX_DECODE_STRING('536E6F77666C616B65');
+SELECT HEX_DECODE_BINARY('536E6F77666C616B65');
+SELECT TRY_HEX_DECODE_STRING('invalid');
+SELECT TRY_HEX_DECODE_BINARY('invalid');
+SELECT TRY_BASE64_DECODE_STRING('invalid!!!');
+SELECT TRY_BASE64_DECODE_BINARY('invalid!!!');
+
+-- =====================================================
+-- BITWISE FUNCTIONS
+-- =====================================================
+
+SELECT BITAND(12, 10);
+SELECT BITOR(12, 10);
+SELECT BITXOR(12, 10);
+SELECT BITNOT(12);
+SELECT BITSHIFTLEFT(1, 4);
+SELECT BITSHIFTRIGHT(16, 2);
+SELECT GETBIT(8, 3);
+SELECT GETBIT(8, 2);
+
+-- =====================================================
+-- SYSTEM FUNCTIONS
+-- =====================================================
+
+SELECT CURRENT_USER();
+SELECT CURRENT_ROLE();
+SELECT CURRENT_DATABASE();
+SELECT CURRENT_SCHEMA();
+SELECT CURRENT_SCHEMAS();
+SELECT CURRENT_WAREHOUSE();
+SELECT CURRENT_ACCOUNT();
+SELECT CURRENT_ACCOUNT_NAME();
+SELECT CURRENT_ORGANIZATION_NAME();
+SELECT CURRENT_REGION();
+SELECT CURRENT_VERSION();
+SELECT CURRENT_CLIENT();
+SELECT CURRENT_SESSION();
+SELECT CURRENT_STATEMENT();
+SELECT LAST_QUERY_ID();
+SELECT LAST_QUERY_ID(1);
+SELECT LAST_TRANSACTION();
+SELECT CURRENT_TRANSACTION();
+SELECT UUID_STRING();
+SELECT UUID_STRING('session');
+
+-- =====================================================
+-- CONTEXT FUNCTIONS
+-- =====================================================
+
+SELECT CURRENT_AVAILABLE_ROLES();
+SELECT CURRENT_SECONDARY_ROLES();
+SELECT CURRENT_ROLE_TYPE();
+SELECT CURRENT_IP_ADDRESS();
+SELECT IS_GRANTED_TO_INVOKER_ROLE('CREATE TABLE');
+SELECT IS_ROLE_IN_SESSION('PUBLIC');
+SELECT INVOKER_ROLE();
+SELECT INVOKER_SHARE();
+SELECT IS_DATABASE_ROLE_IN_SESSION('db_role');
+SELECT POLICY_CONTEXT('ROW_ACCESS_POLICY', 'policy_name');
+
+-- =====================================================
+-- DATA GENERATION FUNCTIONS
+-- =====================================================
+
+SELECT SEQ1();
+SELECT SEQ2();
+SELECT SEQ4();
+SELECT SEQ8();
+SELECT UNIFORM(1, 100, RANDOM());
+SELECT NORMAL(0, 1, RANDOM());
+SELECT ZIPF(1.5, 100, RANDOM());
+
+-- =====================================================
+-- GEOSPATIAL FUNCTIONS
+-- =====================================================
+
+SELECT ST_MAKEPOINT(40.7128, -74.0060);
+SELECT ST_POINT(40.7128, -74.0060);
+SELECT ST_X(ST_MAKEPOINT(40.7128, -74.0060));
+SELECT ST_Y(ST_MAKEPOINT(40.7128, -74.0060));
+SELECT ST_DISTANCE(ST_MAKEPOINT(0, 0), ST_MAKEPOINT(1, 1));
+SELECT ST_GEOHASH(ST_MAKEPOINT(40.7128, -74.0060));
+SELECT ST_GEOHASH(ST_MAKEPOINT(40.7128, -74.0060), 10);
+SELECT TO_GEOGRAPHY('POINT(-122.35 37.55)');
+SELECT TO_GEOMETRY('POINT(0 0)');
+SELECT ST_ASTEXT(TO_GEOGRAPHY('POINT(-122.35 37.55)'));
+SELECT ST_ASWKT(TO_GEOGRAPHY('POINT(-122.35 37.55)'));
+SELECT ST_ASGEOJSON(TO_GEOGRAPHY('POINT(-122.35 37.55)'));
+
+-- =====================================================
+-- H3 GEOSPATIAL FUNCTIONS
+-- =====================================================
+
+SELECT H3_LATLNG_TO_CELL(40.7128, -74.0060, 9);
+SELECT H3_LATLNG_TO_CELL_STRING(40.7128, -74.0060, 9);
+SELECT H3_CELL_TO_LATLNG(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9));
+SELECT H3_GET_RESOLUTION(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9));
+SELECT H3_IS_VALID_CELL(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9));
+SELECT H3_CELL_TO_BOUNDARY(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9));
+SELECT H3_CELL_TO_CHILDREN(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9), 10);
+SELECT H3_CELL_TO_PARENT(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9), 8);
+SELECT H3_GRID_DISTANCE(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9), H3_LATLNG_TO_CELL(40.7614, -73.9776, 9));
+SELECT H3_GRID_DISK(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9), 1);
+SELECT H3_GRID_PATH(H3_LATLNG_TO_CELL(40.7128, -74.0060, 9), H3_LATLNG_TO_CELL(40.7614, -73.9776, 9));
+
+-- =====================================================
+-- UTILITY FUNCTIONS
+-- =====================================================
+
+SELECT TYPEOF('test');
+SELECT TYPEOF(123);
+SELECT TYPEOF(CURRENT_DATE());
+SELECT STRTOK('one,two,three', ',', 1);
+SELECT STRTOK('one,two,three', ',', 2);
+SELECT STRTOK_TO_ARRAY('one,two,three', ',');
+SELECT STRTOK_SPLIT_TO_TABLE('one,two,three', ',');
+SELECT COLLATE('string', 'en-ci');
+SELECT COLLATION('string');
+SELECT COMPRESS('Hello Snowflake');
+SELECT DECOMPRESS_STRING(COMPRESS('Hello Snowflake'));
+SELECT DECOMPRESS_BINARY(COMPRESS('Hello Snowflake'));
+
+-- =====================================================
+-- TABLE FUNCTIONS
+-- =====================================================
+
+SELECT * FROM TABLE(FLATTEN(input => PARSE_JSON('{"a":1,"b":2}')));
+SELECT * FROM TABLE(FLATTEN(input => PARSE_JSON('[1,2,3]')));
+SELECT * FROM TABLE(GENERATOR(ROWCOUNT => 5));
+SELECT * FROM TABLE(RESULT_SCAN(LAST_QUERY_ID()));
+SELECT * FROM TABLE(RESULT_SCAN(LAST_QUERY_ID(-1)));
+
+-- =====================================================
+-- INFORMATION FUNCTIONS
+-- =====================================================
+
+SELECT SYSTEM$TYPEOF(123);
+SELECT SYSTEM$TYPEOF('test');
+SELECT SYSTEM$CLUSTERING_DEPTH('database.schema.table');
+SELECT SYSTEM$CLUSTERING_INFORMATION('database.schema.table');
+SELECT SYSTEM$GET_PREDECESSOR_RETURN_VALUE();
+SELECT SYSTEM$PIPE_STATUS('pipe_name');
+SELECT SYSTEM$STREAM_HAS_DATA('stream_name');
+SELECT SYSTEM$TASK_DEPENDENTS_ENABLE('task_name');
+SELECT SYSTEM$WHITELIST();
+SELECT SYSTEM$WHITELIST_PRIVATELINK();
+
+-- =====================================================
+-- USER DEFINED : SNOWFLAKE FUNCTIONS REFERENCE
+-- =====================================================
+
+USE ROLE accountadmin;
+
+---> create tasty_bytes database
+CREATE OR REPLACE DATABASE tasty_bytes;
+
+---> create raw_pos schema
+CREATE OR REPLACE SCHEMA tasty_bytes.raw_pos;
+
+
+---> file format creation
+CREATE OR REPLACE FILE FORMAT tasty_bytes.public.csv_ff
+type = 'csv';
+
+---> stage creation
+CREATE OR REPLACE STAGE tasty_bytes.public.s3load
+url = 's3://sfquickstarts/frostbyte_tastybytes/'
+file_format = tasty_bytes.public.csv_ff;
+---> example of creating an internal stage
+-- CREATE OR REPLACE STAGE tasty_bytes.public.internal_stage_test;
+
+---> list files in stage
+ls @tasty_bytes.public.s3load;
+
+---> menu table build
+CREATE OR REPLACE TABLE tasty_bytes.raw_pos.menu
+(
+   menu_id NUMBER(19,0),
+   menu_type_id NUMBER(38,0),
+   menu_type VARCHAR(16777216),
+   truck_brand_name VARCHAR(16777216),
+   menu_item_id NUMBER(38,0),
+   menu_item_name VARCHAR(16777216),
+   item_category VARCHAR(16777216),
+   item_subcategory VARCHAR(16777216),
+   cost_of_goods_usd NUMBER(38,4),
+   sale_price_usd NUMBER(38,4),
+   menu_item_health_metrics_obj VARIANT
+);
+
+---> menu table load
+COPY INTO tasty_bytes.raw_pos.menu
+FROM @tasty_bytes.public.s3load/raw_pos/menu/;
+
+SELECT * FROM TASTY_BYTES.RAW_POS.MENU LIMIT 10;
+
+SELECT MAX(SALE_PRICE_USD) FROM TASTY_BYTES.RAW_POS.MENU;
+
+---> use a particular database
+USE DATABASE TASTY_BYTES;
+
+---> create the max_menu_price UDF (User-Defined Function)
+CREATE FUNCTION max_menu_price()
+ RETURNS NUMBER(5,2)
+ AS
+ $$
+   SELECT MAX(SALE_PRICE_USD) FROM TASTY_BYTES.RAW_POS.MENU
+ $$
+ ;
+
+---> run the max_menu_price function by calling it in a select statement
+SELECT max_menu_price();
+
+SHOW FUNCTIONS LIKE 'max_menu%';
+
+---> create a new function, but one that takes in an argument
+CREATE FUNCTION max_menu_price_converted(USD_to_new NUMBER)
+ RETURNS NUMBER(5,2)
+ AS
+ $$
+   SELECT USD_TO_NEW*MAX(SALE_PRICE_USD) FROM TASTY_BYTES.RAW_POS.MENU
+ $$
+ ;
+
+SELECT max_menu_price_converted(1.35);
+
+
+CREATE OR REPLACE FUNCTION max_manu_price_convert(usd_value number)
+RETURNS NUMBER(10,2)
+AS
+$$
+    SELECT MAX(SALE_PRICE_USD)*usd_value FROM TASTY_BYTES.RAW_POS.MENU
+$$;
+
+select max_manu_price_convert(2.5);
+
+---> create a Python function
+CREATE FUNCTION winsorize (val NUMERIC, up_bound NUMERIC, low_bound NUMERIC)
+returns NUMERIC
+language python
+runtime_version = '3.11'
+handler = 'winsorize_py'
+AS
+$$
+def winsorize_py(val, up_bound, low_bound):
+   if val > up_bound:
+       return up_bound
+   elif val < low_bound:
+       return low_bound
+   else:
+       return val
+$$;
+
+---> run the Python function
+SELECT winsorize(12.0, 11.0, 4.0);
+
+---> here’s the reference UDF we’re going to work off of as we make our UDTF
+CREATE FUNCTION max_menu_price()
+ RETURNS NUMBER(5,2)
+ AS
+ $$
+   SELECT MAX(SALE_PRICE_USD) FROM TASTY_BYTES.RAW_POS.MENU
+ $$
+ ;
+
+USE DATABASE TASTY_BYTES;
+
+ ---> create a  UDTF (User-Defined Table Function)
+CREATE OR REPLACE FUNCTION menu_prices_above(price_floor NUMBER)
+ RETURNS TABLE (item VARCHAR, price NUMBER)
+ AS
+ $$
+   SELECT MENU_ITEM_NAME, SALE_PRICE_USD
+   FROM TASTY_BYTES.RAW_POS.MENU
+   WHERE SALE_PRICE_USD > price_floor
+   ORDER BY 2 DESC
+ $$
+ ;
+ ---> now you can see it in the list of all functions!
+SHOW FUNCTIONS LIKE 'menu_prices%';
+
+---> run the UDTF to see what the output looks like
+SELECT * FROM TABLE(menu_prices_above(15));
+
+---> you can use a where clause on the result
+SELECT * FROM TABLE(menu_prices_above(15))
+WHERE ITEM ILIKE '%CHICKEN%';
+
