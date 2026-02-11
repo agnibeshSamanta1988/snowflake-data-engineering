@@ -237,14 +237,15 @@ SHOW FILE FORMATS;
 
 ```sql
 -- Unload data to stage
-COPY INTO @~/unload/customers_
+COPY INTO @~/customers/staged/MOCK_latest
     FROM customers
-    FILE_FORMAT = (TYPE = 'CSV' HEADER = TRUE)
+    FILE_FORMAT = (TYPE = CSV FIELD_OPTIONALLY_ENCLOSED_BY = '"' COMPRESSION = NONE)
+    HEADER = TRUE
     SINGLE = FALSE
     MAX_FILE_SIZE = 5368709120;
 
 -- Download file from stage to local (SnowSQL)
-GET @~/unload/ file://F:\temp\;
+GET @~/customers/staged/MOCK_latest_0_0_0.csv file://F:\temp\;
 
 -- Unload to S3
 COPY INTO s3://mybucket/unload/
