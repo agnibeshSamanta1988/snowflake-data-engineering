@@ -1,0 +1,139 @@
+Microsoft Windows [Version 10.0.26200.7705]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\hi>where snowsql
+C:\Program Files\Snowflake SnowSQL\snowsql.exe
+
+C:\Users\hi>snowsql -a DRBLCDL-ZQ30429 -u saamanta
+Password:
+* SnowSQL * v1.4.5
+Type SQL statements or !help
+saamanta#COMPUTE_WH@(no database).(no schema)>use database LA_DB;
++----------------------------------+
+| status                           |
+|----------------------------------|
+| Statement executed successfully. |
++----------------------------------+
+1 Row(s) produced. Time Elapsed: 0.365s
+saamanta#COMPUTE_WH@LA_DB.PUBLIC>use schema LA_SCHEMA;
++----------------------------------+
+| status                           |
+|----------------------------------|
+| Statement executed successfully. |
++----------------------------------+
+1 Row(s) produced. Time Elapsed: 0.732s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>list @~;
++------+------+-----+---------------+
+| name | size | md5 | last_modified |
+|------+------+-----+---------------|
++------+------+-----+---------------+
+0 Row(s) produced. Time Elapsed: 0.445s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>select * from customers limit 10;
++----------+------------+------------+---------------+-----------------------------+--------+-------+
+| CUSTOMER | FIRST_NAME | LAST_NAME  | REGION        | EMAIL                       | GENDER | order |
+|----------+------------+------------+---------------+-----------------------------+--------+-------|
+|        1 | Hagen      | Everwin    | United States | heverwin0@indiatimes.com    | Male   |  5515 |
+|        2 | Murray     | Meugens    | Spain         | mmeugens1@php.net           | Male   |   318 |
+|        3 | Glen       | McPhillips | United States | gmcphillips2@symantec.com   | Male   |  6581 |
+|        4 | Bryon      | Ruben      | Brazil        | bruben3@jalbum.net          | Male   |  6809 |
+|        5 | Jory       | Combes     | Spain         | jcombes4@fc2.com            | Male   |  3993 |
+|        6 | Ly         | Walthew    | Thailand      | lwalthew5@foxnews.com       | Male   |  1386 |
+|        7 | Neron      | McPartling | Brazil        | nmcpartling6@thetimes.co.uk | Male   |  3574 |
+|        8 | Base       | Leverett   | Brazil        | bleverett7@nasa.gov         | Male   |  4577 |
+|        9 | Burton     | Yegorkin   | United States | byegorkin8@census.gov       | Male   |  6349 |
+|       10 | Ardelle    | Esp        | Brazil        | aesp9@google.com.br         | Female |  9355 |
++----------+------------+------------+---------------+-----------------------------+--------+-------+
+10 Row(s) produced. Time Elapsed: 1.219s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>put file://F:\temp\MOCK.csv @~/customers/staged AUTO_COMPRESS = FALSE;
++----------+----------+-------------+-------------+--------------------+--------------------+----------+---------+
+| source   | target   | source_size | target_size | source_compression | target_compression | status   | message |
+|----------+----------+-------------+-------------+--------------------+--------------------+----------+---------|
+| MOCK.csv | MOCK.csv |       64830 |       64832 | NONE               | NONE               | UPLOADED |         |
++----------+----------+-------------+-------------+--------------------+--------------------+----------+---------+
+1 Row(s) produced. Time Elapsed: 3.894s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>put file://F:\temp\MOCK1.csv @~/customers/staged AUTO_COMPRESS = FALSE;
++-----------+-----------+-------------+-------------+--------------------+--------------------+----------+---------+
+| source    | target    | source_size | target_size | source_compression | target_compression | status   | message |
+|-----------+-----------+-------------+-------------+--------------------+--------------------+----------+---------|
+| MOCK1.csv | MOCK1.csv |       65799 |       65808 | NONE               | NONE               | UPLOADED |         |
++-----------+-----------+-------------+-------------+--------------------+--------------------+----------+---------+
+1 Row(s) produced. Time Elapsed: 4.557s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>list @~;
++----------------------------+-------+----------------------------------+-------------------------------+
+| name                       |  size | md5                              | last_modified                 |
+|----------------------------+-------+----------------------------------+-------------------------------|
+| customers/staged/MOCK.csv  | 64832 | 74b83ea8f10706a962040694208459d5 | Wed, 11 Feb 2026 09:32:11 GMT |
+| customers/staged/MOCK1.csv | 65808 | dcdc3ce7cb2c6e6ed154a7a299c009ac | Wed, 11 Feb 2026 09:33:19 GMT |
++----------------------------+-------+----------------------------------+-------------------------------+
+2 Row(s) produced. Time Elapsed: 0.414s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>truncate table CUSTOMERS;
++----------------------------------+
+| status                           |
+|----------------------------------|
+| Statement executed successfully. |
++----------------------------------+
+1 Row(s) produced. Time Elapsed: 2.506s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>select count(*) from CUSTOMERS;
++----------+
+| COUNT(*) |
+|----------|
+|        0 |
++----------+
+1 Row(s) produced. Time Elapsed: 0.410s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>COPY INTO customers
+                                    FROM @~/customers/staged
+                                    FILE_FORMAT = (TYPE = 'CSV' SKIP_HEADER = 1);
++----------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
+| file                       | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name |
+|----------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------|
+| customers/staged/MOCK.csv  | LOADED |        1000 |        1000 |           1 |           0 | NULL        |             NULL |             NULL | NULL                    |
+| customers/staged/MOCK1.csv | LOADED |        1000 |        1000 |           1 |           0 | NULL        |             NULL |             NULL | NULL                    |
++----------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
+2 Row(s) produced. Time Elapsed: 3.636s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>select count(*) from CUSTOMERS;
++----------+
+| COUNT(*) |
+|----------|
+|     2000 |
++----------+
+1 Row(s) produced. Time Elapsed: 0.601s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>truncate table CUSTOMERS;
++----------------------------------+
+| status                           |
+|----------------------------------|
+| Statement executed successfully. |
++----------------------------------+
+1 Row(s) produced. Time Elapsed: 0.772s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>COPY INTO customers
+                                    FROM @~/customers/staged/MOCK1.csv
+                                    FILE_FORMAT = (TYPE = 'CSV' SKIP_HEADER = 1);
++----------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
+| file                       | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name |
+|----------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------|
+| customers/staged/MOCK1.csv | LOADED |        1000 |        1000 |           1 |           0 | NULL        |             NULL |             NULL | NULL                    |
++----------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
+1 Row(s) produced. Time Elapsed: 1.277s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>COPY INTO customers
+                                    FROM @~/customers/staged/
+                                    FILE_FORMAT = (TYPE = 'CSV' SKIP_HEADER = 1) PURGE =TRUE;
++---------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
+| file                      | status | rows_parsed | rows_loaded | error_limit | errors_seen | first_error | first_error_line | first_error_character | first_error_column_name |
+|---------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------|
+| customers/staged/MOCK.csv | LOADED |        1000 |        1000 |           1 |           0 | NULL        |             NULL |            NULL | NULL                    |
++---------------------------+--------+-------------+-------------+-------------+-------------+-------------+------------------+-----------------------+-------------------------+
+1 Row(s) produced. Time Elapsed: 1.549s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>select count(*) from CUSTOMERS;
++----------+
+| COUNT(*) |
+|----------|
+|     2000 |
++----------+
+1 Row(s) produced. Time Elapsed: 0.415s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>list @~;
++----------------------------+-------+----------------------------------+-------------------------------+
+| name                       |  size | md5                              | last_modified                 |
+|----------------------------+-------+----------------------------------+-------------------------------|
+| customers/staged/MOCK1.csv | 65808 | dcdc3ce7cb2c6e6ed154a7a299c009ac | Wed, 11 Feb 2026 09:33:19 GMT |
++----------------------------+-------+----------------------------------+-------------------------------+
+1 Row(s) produced. Time Elapsed: 0.574s
+saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>
