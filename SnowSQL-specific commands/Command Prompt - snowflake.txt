@@ -4,7 +4,7 @@ Microsoft Windows [Version 10.0.26200.7705]
 C:\Users\hi>where snowsql
 C:\Program Files\Snowflake SnowSQL\snowsql.exe
 
-C:\Users\hi>snowsql -a DRBLCDL-ZQ30429 -u saamanta
+C:\Users\hi>snowsql -a DXBDCDL-XQ30429 -u saamanta
 Password:
 * SnowSQL * v1.4.5
 Type SQL statements or !help
@@ -137,3 +137,4 @@ saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>list @~;
 +----------------------------+-------+----------------------------------+-------------------------------+
 1 Row(s) produced. Time Elapsed: 0.574s
 saamanta#COMPUTE_WH@LA_DB.LA_SCHEMA>
+
