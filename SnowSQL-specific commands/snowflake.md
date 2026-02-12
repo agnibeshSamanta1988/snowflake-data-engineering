@@ -247,6 +247,13 @@ COPY INTO @~/customers/staged/MOCK_latest
 -- Download file from stage to local (SnowSQL)
 GET @~/customers/staged/MOCK_latest_0_0_0.csv file://F:\temp\;
 
+-- Unload data to stage by partition
+COPY INTO @~/customers/staged/
+    FROM customers
+    PARTITION BY region
+    FILE_FORMAT = (TYPE = CSV COMPRESSION = NONE)
+    HEADER = TRUE
+
 -- Unload to S3
 COPY INTO s3://mybucket/unload/
     FROM customers
